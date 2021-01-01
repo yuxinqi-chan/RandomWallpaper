@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RandomWallpaper</string>
+    <string name="switch1">开关</string>
+    <string name="edit_text_preference_1">edit_text_preference</string>
+    <string name="default_url">https://i.xinger.ink:4443/images.php</string>
+    <string name="edit_text_preference_title">图片接口</string>
+    <string name="refresh_now">立即更换</string>
+    <string name="refreshing">正在更换</string>
+    <string name="auto_refresh_minute">auto_refresh_minute</string>
+</resources>
