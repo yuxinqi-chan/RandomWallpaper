@@ -1,2 +1,2 @@
 # RandomWallpaper
-android app for randomly changing wallpaper
+Android App for randomly changing wallpaper
