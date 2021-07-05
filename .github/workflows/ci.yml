@@ -22,7 +22,7 @@ jobs:
         with:
           java-version: 1.8
       - name: install gradle
-        run: apt install gradle -y
+        run: sudo apt install gradle -y
       - name: gradle wrapper
         run: gradle wrapper
       - name: Build Release APK
