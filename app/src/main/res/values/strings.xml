@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">RandomWallpaper</string>
-    <string name="switch1">开关</string>
-    <string name="edit_text_preference_1">edit_text_preference</string>
-    <string name="default_url">https://i.xinger.ink:4443/images.php</string>
-    <string name="edit_text_preference_title">图片接口</string>
-    <string name="refresh_now">立即更换</string>
-    <string name="refreshing">正在更换</string>
-    <string name="auto_refresh_minute">auto_refresh_minute</string>
+    <string name="default_api_url" translatable="false">https://api.ixiaowai.cn/api/api.php</string>
+    <string name="api_url">api</string>
+    <string name="refresh_now">refresh now</string>
+    <string name="refreshing">refreshing</string>
+    <string name="auto_refresh_minute">auto refresh minute</string>
+    <string name="api_random_switch">switch</string>
+    <string name="default_refresh_minute" translatable="false">1</string>
+    <string name="directory_uri">directory</string>
+    <string name="random_directory">random directory</string>
+    <string name="directory_random_switch">switch</string>
+    <string name="option">option</string>
+    <string name="api_random">random api</string>
+    <string name="auto_refresh_switch">auto_refresh</string>
 </resources>

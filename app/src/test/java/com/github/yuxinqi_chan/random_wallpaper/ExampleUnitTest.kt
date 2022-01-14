@@ -1,4 +1,4 @@
-package com.github.yufield.randomwallpaper
+package com.github.yuxinqi_chan.random_wallpaper
 
 import org.junit.Test
 

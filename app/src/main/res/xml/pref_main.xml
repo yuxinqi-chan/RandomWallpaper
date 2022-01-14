@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.github.yufield.randomwallpaper.EditTextPreference
-        android:defaultValue="0"
-        android:inputType="number"
-        android:key="@string/auto_refresh_minute"
-        android:title="自动更换（分钟）" />
-    <com.github.yufield.randomwallpaper.EditTextPreference
-        android:defaultValue="@string/default_url"
-        android:key="@string/edit_text_preference_1"
-        android:title="@string/edit_text_preference_title" />
-    <DropDownPreference/>
+    <PreferenceCategory android:title="@string/random_directory">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/directory_random_switch"
+            android:title="@string/directory_random_switch" />
+        <Preference
+            android:key="@string/directory_uri"
+            android:title="@string/directory_uri" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/api_random">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/api_random_switch"
+            android:title="@string/api_random_switch" />
+        <EditTextPreference
+            android:defaultValue="@string/default_api_url"
+            android:key="@string/api_url"
+            android:title="@string/api_url" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/option">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/auto_refresh_switch"
+            android:title="@string/auto_refresh_switch" />
+        <EditTextPreference
+            android:defaultValue="@string/default_refresh_minute"
+            android:key="@string/auto_refresh_minute"
+            android:title="@string/auto_refresh_minute" />
+        <Preference
+            android:key="@string/refresh_now"
+            android:title="@string/refresh_now" />
+    </PreferenceCategory>
 </PreferenceScreen>

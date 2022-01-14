@@ -14,16 +14,9 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_pref_fragment"
-            android:name="com.github.yufield.pixivscreen.MainPrefFragment"
+            android:name="com.github.yuxinqi_chan.random_wallpaper.MainPrefFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="main_pref_fragment" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="@string/refresh_now" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

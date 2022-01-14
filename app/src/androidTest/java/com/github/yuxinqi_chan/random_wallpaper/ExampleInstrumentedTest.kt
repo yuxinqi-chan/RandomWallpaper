@@ -1,4 +1,4 @@
-package com.github.yufield.randomwallpaper
+package com.github.yuxinqi_chan.random_wallpaper
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

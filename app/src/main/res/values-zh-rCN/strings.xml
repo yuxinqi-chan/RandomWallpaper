@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">随机壁纸</string>
+    <string name="api_url">图片接口</string>
+    <string name="refresh_now">立即更换</string>
+    <string name="refreshing">正在更换</string>
+    <string name="auto_refresh_minute">自动刷新时间（分钟）</string>
+    <string name="api_random_switch">接口随机</string>
+    <string name="directory_uri">选择目录</string>
+    <string name="random_directory">目录随机</string>
+    <string name="directory_random_switch">目录随机</string>
+    <string name="api_random">接口随机</string>
+    <string name="option">设置</string>
+    <string name="auto_refresh_switch">自动刷新</string>
+</resources>
