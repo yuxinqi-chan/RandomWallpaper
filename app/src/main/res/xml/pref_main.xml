@@ -1,35 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/random_directory">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:title="@string/directory_random_category_title"
+        app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/directory_random_switch"
-            android:title="@string/directory_random_switch" />
-        <Preference
-            android:key="@string/directory_uri"
-            android:title="@string/directory_uri" />
+            android:title="@string/directory_random_switch"
+            app:iconSpaceReserved="false" />
+        <com.github.yuxinqi_chan.random_wallpaper.DocumentTreePreference
+            android:defaultValue=""
+            android:key="@string/directory"
+            android:title="@string/directory"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/api_random">
+    <PreferenceCategory
+        android:title="@string/api_random_category_title"
+        app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/api_random_switch"
-            android:title="@string/api_random_switch" />
+            android:title="@string/api_random_switch"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="@string/default_api_url"
             android:key="@string/api_url"
-            android:title="@string/api_url" />
+            android:title="@string/api_url"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/option">
+    <PreferenceCategory
+        android:title="@string/auto_refresh_category_title"
+        app:iconSpaceReserved="false">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/auto_refresh_switch"
-            android:title="@string/auto_refresh_switch" />
-        <EditTextPreference
+            android:title="@string/auto_refresh_switch"
+            app:iconSpaceReserved="false" />
+        <com.github.yuxinqi_chan.random_wallpaper.EditNumberPreference
             android:defaultValue="@string/default_refresh_minute"
             android:key="@string/auto_refresh_minute"
-            android:title="@string/auto_refresh_minute" />
-        <Preference
+            android:title="@string/auto_refresh_minute"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+        <com.github.yuxinqi_chan.random_wallpaper.RefreshButton
             android:key="@string/refresh_now"
-            android:title="@string/refresh_now" />
+            android:title="@string/refresh_now"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

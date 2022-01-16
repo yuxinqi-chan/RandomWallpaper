@@ -1,9 +1,7 @@
 package com.github.yuxinqi_chan.random_wallpaper
 
 import android.content.Context
-import android.util.Log
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import java.util.concurrent.TimeUnit
@@ -19,33 +17,22 @@ class WallpaperWorker(private val context: Context, workerParams: WorkerParamete
             e.printStackTrace()
             Result.failure()
         } finally {
-            val string =
-                defaultSharedPreferences.getString(
-                    context.getString(R.string.auto_refresh_minute),
-                    "0"
-                )
-            Log.v(
-                javaClass.simpleName,
-                "${context.getString(R.string.auto_refresh_minute)},$string"
-            )
-            var long = string?.toLongOrNull()
-            if (long != null) {
-                if (long < 1)
-                    long = 1
-                val oneTimeWorkRequest = OneTimeWorkRequestBuilder<WallpaperWorker>()
-                    .setInitialDelay(long, TimeUnit.MINUTES)
-                    .build()
-                WorkManager.getInstance(context).enqueue(oneTimeWorkRequest)
+            if (getAutoRefreshSwitch()) {
+                val autoRefreshInterval = getAutoRefreshInterval()
+                if (autoRefreshInterval != null) {
+                    val oneTimeWorkRequest =
+                        OneTimeWorkRequestBuilder<WallpaperWorker>().setInitialDelay(
+                            autoRefreshInterval,
+                            TimeUnit.MINUTES
+                        ).build()
+                    getWorkManager().enqueue(oneTimeWorkRequest)
+                }
             }
         }
     }
 
     override fun requireContext(): Context {
         return context
-    }
-
-    override fun getString(resId: Int): String {
-        return context.getString(resId)
     }
 
 }

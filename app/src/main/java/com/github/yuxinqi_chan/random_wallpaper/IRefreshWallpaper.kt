@@ -2,68 +2,38 @@ package com.github.yuxinqi_chan.random_wallpaper
 
 import android.app.WallpaperManager
 import android.content.ContentValues
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
+import android.graphics.Rect
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.WindowManager
-import androidx.annotation.StringRes
 import androidx.core.graphics.scale
 import androidx.documentfile.provider.DocumentFile
-import androidx.preference.PreferenceManager
+import com.github.quadflask.smartcrop.Options
+import com.github.quadflask.smartcrop.SmartCrop
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.random.Random
 
 
-interface IRefreshWallpaper {
-    fun requireContext(): Context
+interface IRefreshWallpaper : IHelper {
     val wallpaperManager: WallpaperManager
         get() = WallpaperManager.getInstance(requireContext())
-    val defaultSharedPreferences: SharedPreferences
-        get() = PreferenceManager.getDefaultSharedPreferences(requireContext())
-    val apiUrl: String?
-        get() = defaultSharedPreferences.getString(
-            getString(R.string.api_url),
-            getString(R.string.default_api_url)
-        )
-    val directoryUri: Uri
-        get() = Uri.parse(
-            defaultSharedPreferences.getString(
-                getString(R.string.directory_uri),
-                Uri.EMPTY.toString()
-            )
-        )
 
-    val apiRandomSwitch: Boolean
-        get() = defaultSharedPreferences.getBoolean(
-            getString(R.string.api_random_switch),
-            false
-        )
-    val directory_random_switch: Boolean
-        get() = defaultSharedPreferences.getBoolean(
-            getString(R.string.directory_random_switch),
-            false
-        )
-
-    fun getString(@StringRes resId: Int): String
     fun refreshWallpaper() {
         Log.v(javaClass.simpleName, "refreshWallpaper")
-        if (apiRandomSwitch && !directory_random_switch) {
-            if (apiUrl != null && apiUrl!!.isNotEmpty()) {
-                setWallPaperFromApi()
-            }
+        val apiRandomSwitch = getApiRandomSwitch()
+        val directoryRandomSwitch = getDirectoryRandomSwitch()
+        if (apiRandomSwitch && !directoryRandomSwitch) {
+            setWallPaperFromApi()
         }
-        if (!apiRandomSwitch && directory_random_switch) {
+        if (!apiRandomSwitch && directoryRandomSwitch) {
             setWallPaperFromDirectory()
         }
-        if (apiRandomSwitch && directory_random_switch) {
+        if (apiRandomSwitch && directoryRandomSwitch) {
             if (Random.nextBoolean()) {
                 setWallPaperFromApi()
             } else {
@@ -73,6 +43,7 @@ interface IRefreshWallpaper {
     }
 
     private fun setWallPaperFromDirectory() {
+        val directoryUri = getDirectoryUri()
         val dir = DocumentFile.fromTreeUri(requireContext(), directoryUri)
         if (dir != null) {
             val images = getAllImages(dir, ArrayList())
@@ -89,7 +60,24 @@ interface IRefreshWallpaper {
         }
     }
 
-    fun getAllImages(
+    fun getRandomImage(): Bitmap? {
+        val directoryUri = getDirectoryUri()
+        val dir = DocumentFile.fromTreeUri(requireContext(), directoryUri)
+        if (dir != null) {
+            val images = getAllImages(dir, ArrayList())
+            Log.v(javaClass.simpleName, "randomImageSize:${images.size}")
+            if (images.isNotEmpty()) {
+                val randomImage = images[Random.nextInt(images.size)]
+                Log.v(javaClass.simpleName, "randomImage:${randomImage.uri}")
+                return BitmapFactory.decodeStream(
+                    requireContext().contentResolver.openInputStream(randomImage.uri)
+                )
+            }
+        }
+        return null
+    }
+
+    private fun getAllImages(
         dir: DocumentFile,
         imageList: ArrayList<DocumentFile>
     ): ArrayList<DocumentFile> {
@@ -116,9 +104,12 @@ interface IRefreshWallpaper {
     }
 
     private fun setWallPaperFromApi() {
-        val bitmap = getBitmapFromApi(apiUrl!!)
-        saveBitmapFromApi(bitmap)
-        setBitmap(bitmap)
+        val apiUrl = getApiUrl()
+        if (apiUrl != null) {
+            val bitmap = getBitmapFromApi(apiUrl)
+            saveBitmapFromApi(bitmap)
+            setBitmap(bitmap)
+        }
     }
 
     private fun setBitmap(bitmap: Bitmap) {
@@ -126,10 +117,31 @@ interface IRefreshWallpaper {
         val width = wallpaperManager.desiredMinimumWidth
         Log.v("wallpaper HW", "$height,$width")
         Log.v("bitmap HW", "${bitmap.height},${bitmap.width}")
-//        val resWidth = (bitmap.height * width / height).coerceAtMost(bitmap.width)
-//        val startX = (bitmap.width - resWidth) / 2
-//        val resBitmap = Bitmap.createBitmap(bitmap, startX, 0, resWidth, bitmap.height)
-        wallpaperManager.setBitmap(getScaledBitmap(bitmap))
+        val analyse = SmartCrop.analyze(Options.newInstance(), bitmap).topCrop
+        val width1 = analyse.width / 4
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            wallpaperManager.setBitmap(
+                bitmap,
+                Rect(
+                    analyse.x + width1,
+                    analyse.y,
+                    analyse.x + width1 * 3,
+                    analyse.y + analyse.height
+                ),
+                true,
+                WallpaperManager.FLAG_SYSTEM
+            )
+        } else {
+            wallpaperManager.setBitmap(
+                Bitmap.createBitmap(
+                    bitmap,
+                    analyse.x + width1,
+                    analyse.y,
+                    width1 * 2,
+                    analyse.height
+                )
+            )
+        }
     }
 
     private fun saveBitmapFromApi(bitmap: Bitmap) {
@@ -137,10 +149,10 @@ interface IRefreshWallpaper {
         val contentValues = ContentValues()
         contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             contentValues.put(
                 MediaStore.MediaColumns.RELATIVE_PATH,
-                "${Environment.DIRECTORY_PICTURES}${File.separator}${getString(R.string.app_name)}"
+                "${Environment.DIRECTORY_PICTURES}${File.separator}${requireContext().getString(R.string.app_name)}"
             )
         }
 

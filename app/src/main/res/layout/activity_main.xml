@@ -7,16 +7,39 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/main_pref_fragment"
-            android:name="com.github.yuxinqi_chan.random_wallpaper.MainPrefFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:tag="main_pref_fragment" />
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/main_pref_fragment"
+                    android:name="com.github.yuxinqi_chan.random_wallpaper.MainPrefFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="main_pref_fragment"
+                    tools:layout="@android:layout/preference_category" />
+
+                <ImageView
+                    android:id="@+id/test_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:id="@+id/test_image_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

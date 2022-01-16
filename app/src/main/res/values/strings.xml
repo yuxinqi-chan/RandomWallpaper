@@ -4,13 +4,13 @@
     <string name="api_url">api</string>
     <string name="refresh_now">refresh now</string>
     <string name="refreshing">refreshing</string>
-    <string name="auto_refresh_minute">auto refresh minute</string>
-    <string name="api_random_switch">switch</string>
+    <string name="auto_refresh_minute">auto refresh(minute)</string>
+    <string name="api_random_switch">api random</string>
     <string name="default_refresh_minute" translatable="false">1</string>
-    <string name="directory_uri">directory</string>
-    <string name="random_directory">random directory</string>
-    <string name="directory_random_switch">switch</string>
-    <string name="option">option</string>
-    <string name="api_random">random api</string>
+    <string name="directory">directory</string>
+    <string name="directory_random_category_title">directory random</string>
+    <string name="directory_random_switch">directory random</string>
+    <string name="auto_refresh_category_title">auto refresh</string>
+    <string name="api_random_category_title">api random</string>
     <string name="auto_refresh_switch">auto_refresh</string>
 </resources>

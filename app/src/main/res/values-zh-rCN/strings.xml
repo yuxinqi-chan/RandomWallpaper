@@ -6,10 +6,10 @@
     <string name="refreshing">正在更换</string>
     <string name="auto_refresh_minute">自动刷新时间（分钟）</string>
     <string name="api_random_switch">接口随机</string>
-    <string name="directory_uri">选择目录</string>
-    <string name="random_directory">目录随机</string>
+    <string name="directory">选择目录</string>
+    <string name="directory_random_category_title">目录随机</string>
     <string name="directory_random_switch">目录随机</string>
-    <string name="api_random">接口随机</string>
-    <string name="option">设置</string>
+    <string name="api_random_category_title">接口随机</string>
+    <string name="auto_refresh_category_title">自动刷新</string>
     <string name="auto_refresh_switch">自动刷新</string>
 </resources>
